@@ -1,7 +1,12 @@
+using dotnet_rpg.Data;
+using dotnet_rpg.Data.Interfaces;
+using dotnet_rpg.Data.Repositories;
+using dotnet_rpg.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,11 +31,16 @@ namespace dotnet_rpg
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>(c => c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); 
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "MovieAPI", Version = "v1" });
             });
+
+            services.AddScoped<ICharactersRepository, CharactersRepository>();
+            services.AddScoped<ICharacterService, CharacterService>();
         }
 
 
@@ -45,7 +55,7 @@ namespace dotnet_rpg
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieAPI");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dotnet-rpg");
             });
 
             //app.UseHttpsRedirection();
@@ -59,5 +69,6 @@ namespace dotnet_rpg
                 endpoints.MapControllers();
             });
         }
+
     }
 }
