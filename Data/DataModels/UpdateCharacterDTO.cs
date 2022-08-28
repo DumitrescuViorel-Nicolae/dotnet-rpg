@@ -1,19 +1,15 @@
-﻿using dotnet_rpg.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Business.Models;
 
-namespace Business.Models
+namespace dotnet_rpg.Data.DataModels
 {
-    public class Character
+    public class UpdateCharacterDTO
     {
-        public int Id { get; set; }
+             public int Id { get; set; }
         public string Name { get; set; } = "Frodo";
         public int HitPoints { get; set; } = 100;
         public int Stength { get; set; } = 10;
         public int Defense { get; set; } = 10;
         public int Intelligence { get; set; } = 10;
         public RpgClass Class { get; set; }
-        public User User { get; set; }
     }
 }

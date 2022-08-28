@@ -19,9 +19,12 @@ namespace dotnet_rpg.Data.Repositories
             _mapper = mapper;
         }
 
+        
+
         public async Task<List<Character>> GetAllCharacters()
         {
-            return await _context.Characters.ToListAsync();
+            return await _context.Characters.Select(c => _mapper.Map<Character>(c)).ToListAsync();
+           
         }
 
         public async Task<List<Character>> CreateNew(Character character)
@@ -29,7 +32,21 @@ namespace dotnet_rpg.Data.Repositories
              await _context.Characters.AddAsync(_mapper.Map<Character>(character));
              await _context.SaveChangesAsync();
             
-            return await _context.Characters.ToListAsync();
+            return await GetAllCharacters();
+        }
+
+        public async Task<List<Character>> Update(Character Updatedcharacter)
+        {
+            _context.Update(Updatedcharacter);
+            await _context.SaveChangesAsync();
+
+            return await GetAllCharacters();
+        }
+
+        public Task Delete(GetCharacterDTO character)
+        {
+            _context.Remove(character);
+            return null;
         }
     }
 }

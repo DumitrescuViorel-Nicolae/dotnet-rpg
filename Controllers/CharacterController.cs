@@ -1,4 +1,5 @@
 ﻿using Business.Models;
+using dotnet_rpg.Data.DataModels;
 using dotnet_rpg.DataProvider.DataServices;
 using dotnet_rpg.Models;
 using dotnet_rpg.Services;
@@ -21,13 +22,19 @@ namespace dotnet_rpg.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetAll() => Ok(await _characterService.Get());
+        public async Task<IActionResult> GetAll() => Ok(await _characterService.GetAll());
 
         [HttpGet("[action]")]
         public async Task<IActionResult> GetById(int id) => Ok(await _characterService.GetById(id));
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreateNew(string name, int hitPoints, int strength, int defense, int intelligence, int classNumber) => 
-            Ok(await _characterService.CreateNew(name, hitPoints, strength, defense, intelligence, classNumber));
+        public async Task<IActionResult> CreateNew(AddCharacterDTO addCharacterDTO) => 
+            Ok(await _characterService.CreateNew(addCharacterDTO));
+
+        [HttpPut("[action]")]
+        public async Task<IActionResult> Update(Character getCharacterDTO)
+        {
+            return Ok(await _characterService.Update(getCharacterDTO));
+        }
     }
 }

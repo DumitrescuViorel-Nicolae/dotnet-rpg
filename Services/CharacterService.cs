@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Models;
+using dotnet_rpg.Data.DataModels;
 using dotnet_rpg.Data.Interfaces;
 using dotnet_rpg.DataProvider.DataServices;
 using dotnet_rpg.Models;
@@ -22,30 +23,48 @@ namespace dotnet_rpg.Services
             _charactersRepository = charactersRepository; // inject the characters repo
         }
 
-        public async Task<ServiceResponse<List<GetCharacterDTO>>> CreateNew(string name, int hitPoints, int strength, int defense, int intelligence, int classNumber)
+        public async Task<List<Character>> CreateNew(AddCharacterDTO addCharacterDTO)
         {
-            ServiceResponse<List<GetCharacterDTO>> serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
-            Character newCharacter = new Character { Name = name, HitPoints = hitPoints, Stength = strength, Defense = defense, Intelligence = intelligence, Class = (RpgClass)classNumber };
+            Character newCharacter = new Character 
+            { Name =addCharacterDTO.Name, HitPoints = addCharacterDTO.HitPoints, Stength = addCharacterDTO.Stength, Defense = addCharacterDTO.Defense,
+              Intelligence = addCharacterDTO.Intelligence, Class = addCharacterDTO.Class,
+            };
             var characters = await _charactersRepository.CreateNew(newCharacter);
-            serviceResponse.Data = (characters.Select(c=> _mapper.Map<GetCharacterDTO>(c))).ToList();
-            return serviceResponse;
+            var result = (characters.Select(c=> _mapper.Map<Character>(c))).ToList();
+            return result;
+        }
+        public async Task<List<Character>> GetAll()
+        {
+          
+            return await _charactersRepository.GetAllCharacters();
         }
 
-        public async Task<ServiceResponse<List<GetCharacterDTO>>> Get()
+        public async Task<Character> GetById(int id)
         {
-            ServiceResponse<List<GetCharacterDTO>> serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
-            List<Character> dbCharacters = await _charactersRepository.GetAllCharacters();
-            serviceResponse.Data = (dbCharacters.Select(c=>_mapper.Map<GetCharacterDTO>(c))).ToList();
-            return serviceResponse;
-        }
-
-        public async Task<ServiceResponse<GetCharacterDTO>> GetById(int id)
-        {
-            ServiceResponse<GetCharacterDTO> serviceResponse = new ServiceResponse<GetCharacterDTO>();
             var characters = await _charactersRepository.GetAllCharacters();
-            serviceResponse.Data =_mapper.Map<GetCharacterDTO>(characters.FirstOrDefault(c => c.Id == id));
+            var result =_mapper.Map<Character>(characters.FirstOrDefault(c => c.Id == id));
 
-            return serviceResponse;
+            return result;
         }
+
+        public async Task<List<Character>> Update(Character updateCharacterDTO)
+        {
+            var characterToUpdate =  _charactersRepository.GetAllCharacters().Result.FirstOrDefault(e=> e.Id == updateCharacterDTO.Id);
+            characterToUpdate.Name = updateCharacterDTO.Name;
+            characterToUpdate.Stength = updateCharacterDTO.Stength;
+            characterToUpdate.Defense = updateCharacterDTO.Defense;
+            characterToUpdate.Intelligence = updateCharacterDTO.Intelligence;
+            characterToUpdate.HitPoints = updateCharacterDTO.HitPoints;
+            characterToUpdate.Class = updateCharacterDTO.Class;
+
+            await _charactersRepository.Update(characterToUpdate);
+
+            return await _charactersRepository.GetAllCharacters();
+        }
+        public Task<List<Character>> Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 }
