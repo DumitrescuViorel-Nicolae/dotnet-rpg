@@ -39,8 +39,11 @@ namespace dotnet_rpg
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "MovieAPI", Version = "v1" });
             });
 
+            //Global scope
+
             services.AddScoped<ICharactersRepository, CharactersRepository>();
             services.AddScoped<ICharacterService, CharacterService>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
 
