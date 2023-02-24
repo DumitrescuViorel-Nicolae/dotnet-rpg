@@ -1,8 +1,0 @@
-@startuml
-class AuthController {
-    - <<readonly>> _authRepository : IAuthRepository
-    + AuthController(authRepository:IAuthRepository)
-    + <<async>> Register(request:UserRegistrationDTO) : Task<IActionResult>
-}
-ControllerBase <|-- AuthController
-@enduml

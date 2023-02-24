@@ -1,8 +1,0 @@
-@startuml
-class DataContext {
-    + DataContext(options:DbContextOptions<DataContext>)
-    + Characters : DbSet<Character> <<get>> <<set>>
-    + Users : DbSet<User> <<get>> <<set>>
-}
-DbContext <|-- DataContext
-@enduml

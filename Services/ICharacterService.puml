@@ -1,9 +1,0 @@
-@startuml
-interface ICharacterService {
-    GetAll() : Task <List<Character>>
-    GetById(id:int) : Task<Character>
-    CreateNew(addCharacterDTO:AddCharacterDTO) : Task<List<Character>>
-    Update(updateCharacterDTO:Character) : Task<List<Character>>
-    Delete(id:int) : Task<List<Character>>
-}
-@enduml

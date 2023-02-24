@@ -1,7 +1,0 @@
-@startuml
-interface IAuthRepository {
-    Register(user:User, password:string) : Task<int>
-    Login(username:string, password:string) : Task<string>
-    UserExists(username:string) : Task<bool>
-}
-@enduml
