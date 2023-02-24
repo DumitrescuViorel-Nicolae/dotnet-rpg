@@ -1,0 +1,5 @@
+@startuml
+class UsersAndCharacters <<partial>> {
+    # <<override>> BuildTargetModel(modelBuilder:ModelBuilder) : void
+}
+@enduml

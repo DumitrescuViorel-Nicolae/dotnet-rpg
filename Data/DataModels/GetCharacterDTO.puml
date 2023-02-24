@@ -1,0 +1,11 @@
+@startuml
+class GetCharacterDTO {
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>> = "Frodo"
+    + HitPoints : int <<get>> <<set>> = 100
+    + Stength : int <<get>> <<set>> = 10
+    + Defense : int <<get>> <<set>> = 10
+    + Intelligence : int <<get>> <<set>> = 10
+    + Class : RpgClass <<get>> <<set>>
+}
+@enduml

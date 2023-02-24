@@ -1,0 +1,12 @@
+@startuml
+class CharactersRepository {
+    - <<readonly>> _context : DataContext
+    - <<readonly>> _mapper : IMapper
+    + CharactersRepository(context:DataContext, mapper:IMapper)
+    + <<async>> GetAllCharacters() : Task<List<Character>>
+    + <<async>> Create(character:Character) : Task<List<Character>>
+    + <<async>> Update(Updatedcharacter:Character) : Task<List<Character>>
+    + Delete(character:GetCharacterDTO) : Task
+}
+ICharactersRepository <|-- CharactersRepository
+@enduml

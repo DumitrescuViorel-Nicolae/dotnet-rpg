@@ -1,0 +1,8 @@
+@startuml
+interface ICharactersRepository {
+    GetAllCharacters() : Task<List<Character>>
+    Create(character:Character) : Task<List<Character>>
+    Update(character:Character) : Task<List<Character>>
+    Delete(character:GetCharacterDTO) : Task
+}
+@enduml

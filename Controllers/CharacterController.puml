@@ -1,0 +1,11 @@
+@startuml
+class CharacterController {
+    - <<readonly>> _characterService : ICharacterService
+    + CharacterController(characterService:ICharacterService)
+    + <<async>> GetAll() : Task<IActionResult>
+    + <<async>> GetById(id:int) : Task<IActionResult>
+    + <<async>> CreateNew(addCharacterDTO:AddCharacterDTO) : Task<IActionResult>
+    + <<async>> Update(getCharacterDTO:Character) : Task<IActionResult>
+}
+ControllerBase <|-- CharacterController
+@enduml

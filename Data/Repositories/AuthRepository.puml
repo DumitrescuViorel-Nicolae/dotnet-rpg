@@ -1,0 +1,11 @@
+@startuml
+class AuthRepository {
+    - <<readonly>> _context : DataContext
+    + AuthRepository(context:DataContext)
+    + <<async>> Register(user:User, password:string) : Task<int>
+    + Login(username:string, password:string) : Task<string>
+    + <<async>> UserExists(username:string) : Task<bool>
+    - CreatePasswordHash(password:string, passwordHash:byte[], passwordSalt:byte[]) : void
+}
+IAuthRepository <|-- AuthRepository
+@enduml
