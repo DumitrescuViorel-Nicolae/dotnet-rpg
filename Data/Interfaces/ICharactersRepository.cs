@@ -8,7 +8,7 @@ namespace dotnet_rpg.Data.Interfaces
     public interface ICharactersRepository
     {
         Task<List<Character>> GetAllCharacters();
-        Task<List<Character>> Create(Character character);
+        Task<List<Character>> CreateNew(Character character);
 
         Task<List<Character>> Update(Character character);
         Task Delete(GetCharacterDTO character);

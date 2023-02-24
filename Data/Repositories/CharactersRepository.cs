@@ -19,13 +19,15 @@ namespace dotnet_rpg.Data.Repositories
             _mapper = mapper;
         }
 
+        
+
         public async Task<List<Character>> GetAllCharacters()
         {
             return await _context.Characters.Select(c => _mapper.Map<Character>(c)).ToListAsync();
            
         }
 
-        public async Task<List<Character>> Create(Character character)
+        public async Task<List<Character>> CreateNew(Character character)
         {
              await _context.Characters.AddAsync(_mapper.Map<Character>(character));
              await _context.SaveChangesAsync();

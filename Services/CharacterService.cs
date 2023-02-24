@@ -29,7 +29,7 @@ namespace dotnet_rpg.Services
             { Name =addCharacterDTO.Name, HitPoints = addCharacterDTO.HitPoints, Stength = addCharacterDTO.Stength, Defense = addCharacterDTO.Defense,
               Intelligence = addCharacterDTO.Intelligence, Class = addCharacterDTO.Class,
             };
-            var characters = await _charactersRepository.Create(newCharacter);
+            var characters = await _charactersRepository.CreateNew(newCharacter);
             var result = (characters.Select(c=> _mapper.Map<Character>(c))).ToList();
             return result;
         }
